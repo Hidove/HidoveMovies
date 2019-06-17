@@ -1,0 +1,102 @@
+{extend name="./templates/default/base.html" /}
+{block name="title"}{$video.name} - {$Hidove.subtitle}{/block}
+{block name="main"}
+<div class="mdui-container-fluid" style="margin-top:20px;">
+<!-- <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">Button</button> -->
+<!-- 卡片 -->
+<div class="Hidove-info-card mdui-hoverable">
+    <div class="mdui-col-sm-12 mdui-col-md-12">
+      <div class="mdui-card">
+        <div class="mdui-card-header">
+          <img class="mdui-card-header-avatar Hidove-avatar" src="{$Hidove.avatar}"/>
+          <div class="mdui-card-header-title">{$video.type}</div>
+          <div class="mdui-card-header-subtitle">{$video.last}</div>
+        </div>
+        <div class="mdui-card-media mdui-col-xs-12 mdui-col-sm-3 mdui-col-md-3">
+          <img class="mdui-hoverable mdui-center Hidove-video-cover" style="width: 180px;height: 270px" src="{$video.pic}"/>
+        </div>
+        <div class="mdui-col-xs-12 mdui-col-sm-9 mdui-col-md-9">
+          <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">{$video.name}</div>
+          <div class="mdui-card-primary-subtitle">{$video.actor}</div>
+          <div class="mdui-typo">
+            <ul class="Hidove-info-ul">
+              <li class="Hidove-info-li">
+                <strong>导演：</strong><span>{$video.director}</span>
+              </li>
+              <li class="Hidove-info-li">
+                  <strong>地区：</strong><span>{$video.area}</span><br/>
+              </li>
+              <li class="Hidove-info-li"> 
+                  <strong>语言：</strong><span>{$video.lang}</span>
+              </li>
+              <li class="Hidove-info-li">
+                  <strong>上映：</strong><span>{$video.year}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mdui-card-content Hidove-info-content">{$video.des|strip_tags}</div>
+        </div>
+        </div>
+        <div class="mdui-card-actions mdui-col-sm-12 mdui-clearfix">
+          <div class="mdui-float-left mdui-col-md-4 mdui-col-offset-md-3">
+              <button class="mdui-btn mdui-ripple mdui-color-theme-accent mdui-hoverable" id="playNow">立即播放</button>
+          </div>
+          <div class="mdui-float-left mdui-col-md-5">
+              <button class="mdui-btn mdui-btn-icon mdui-float-right"><i class="mdui-icon material-icons">expand_more</i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- 自制 -->
+ <!-- 引用 -->
+ <div class="mdui-typo mdui-col-xs-12 mdui-col-sm-12 mdui-col-md-12">
+    {foreach $video.url as $i => $vo}
+    <blockquote class="Hidove-info-blockquote">
+      <footer><strong>「{$i+1}」号服务器</strong></footer>
+        <div class="Hidove-info-url">
+            <ul class="mdui-clearfix">
+            {foreach $vo as $key => $value}
+              <li class="Hidove-info-url-list mdui-float-left">
+                  <button id="play-{$key}" value="{$value.1}')" onclick="play('{$value.0}','{$value.1}');" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">{$value.0}</button>
+              </li>
+            {/foreach} 
+            </ul>
+        </div>
+    </blockquote>
+  {/foreach}
+</div>
+ </div>
+ <!-- 播放器 -->
+ <div class="mdui-dialog" id="player">
+   <div class="mdui-dialog-title mdui-clearfix">
+     <div class="mdui-float-left" id="player-title">{$video.name} - {$video.name}</div>
+    <div class="mdui-float-right">
+        <button class="mdui-fab mdui-fab-mini mdui-color-theme-accent mdui-ripple" mdui-dialog-close><i class="mdui-icon material-icons">close</i></button>
+    </div>
+   </div>
+    
+    <div class="mdui-video-container">
+        <iframe id="player-url" height=498 width=510 src="//player.youku.com/embed/XNzUwOTk5MzE2" frameborder=0 allowfullscreen="true"></iframe>
+      </div>
+    <div class="mdui-dialog-actions">
+    </div>
+  </div>
+ <script>
+  var inst = new mdui.Dialog('#player');
+   function play(title,url){
+      inst.open();
+      $("#player-url").attr('src','{$Hidove.playerUrl}'+url);
+      $("#player-title").text(title + ' - {$video.name}');
+   }
+   // method
+      var dialog = document.getElementById('player');
+      var playerUrl = document.getElementById('player-url');
+      dialog.addEventListener('open.mdui.dialog', function () {
+});
+$('#playNow').click(function(){
+  $("#play-0").click();
+});
+ </script>
+{/block}

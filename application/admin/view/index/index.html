@@ -1,0 +1,30 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <img class="mdui-img-rounded" style="margin-top:10px; max-height:250px;max-width:800px;" src="https://i.loli.net/2019/06/15/5d04fd41d486483155.jpg"/>
+      <div class="mdui-typo">
+        <ul id = "mdui-ui" class="mdui-list">
+            <li id="mdui-ui-first"><strong> 程序版本：</strong><code>Hidove影视系统</code><code>V1</code></li>
+            <li><strong> 官网：</strong><code>www.hidove.cn</code></li>
+            <li><strong> 作者：</strong><code>余生</code></li>
+            <li><strong> 服务器时间：</strong><code>{php}echo date("Y-m-d G:i:s");{/php}</code></li>
+            <li><strong> Domian：</strong><code>{$_SERVER.HTTP_HOST}</code></li>
+            <li><strong> 运行目录：</strong><code>{$_SERVER.DOCUMENT_ROOT}</code></li>
+            <li><strong> User-Agent：</strong><code>{$_SERVER.HTTP_USER_AGENT}</code></li>
+            <li><strong> 服务器解译引擎：</strong><code>{$_SERVER.SERVER_SOFTWARE}</code></li>
+            <li><strong> 服务器系统：</strong><code>{php}echo PHP_OS;{/php}</code></li>
+            <li><strong> 系统信息：</strong><code>{php}echo php_uname();{/php}</code></li>
+            <li><strong> 服务器语言：</strong><code>{php}echo $_SERVER['HTTP_ACCEPT_LANGUAGE'];{/php}</code></li>
+            <li><strong> PHP版本：</strong><code>{php}echo PHP_VERSION;{/php}</code></li>
+            <li><strong> Zend_Version：</strong><code>{php}echo Zend_Version();{/php}</code></li>
+            <li><strong> PHP最大执行时间：</strong><code>{php} echo get_cfg_var("max_execution_time")."秒 ";{/php}</code></li>
+        </ul>
+  </div>
+  </div>
+  <script src="{$Hidove.template}js/index.js"></script>
+<script>
+</script>
+{/block}

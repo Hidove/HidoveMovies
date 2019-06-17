@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{block name="title"}标题{/block}</title>
+  <meta name="keywords" content="{$Hidove.keywords}" />
+  <meta name="description" content="{$Hidove.description}" />
+  <link rel="icon" href="{$Hidove.favicon}">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <link href="{$Hidove.template}css/backTop.css" rel="stylesheet" type="text/css" />
+{include file="head" /}
+{block name="main"}主内容{/block}
+<a href="#0" class="cd-top">Top</a>
+<script src="{$Hidove.template}js/base.js"></script>
+</body>
+</html>

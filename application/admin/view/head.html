@@ -1,0 +1,106 @@
+
+	<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/css/mdui.min.css">
+	<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/js/mdui.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$Hidove.template}css/style.css">
+</head>
+<body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-indigo mdui-theme-accent-pink">
+<div class="mdui-appbar mdui-appbar-fixed">
+  <div class="mdui-toolbar mdui-color-indigo">
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon " mdui-drawer="{target: '#left-drawer'}"><i class="mdui-icon material-icons">&#xe5d2;</i></a>
+    <a href="{:url('admin/index/index')}" class="mdui-typo-headline">后台管理中心</a>
+    <div class="mdui-toolbar-spacer"></div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索'}" mdui-dialog="{target: '#search'}"><i class="mdui-icon material-icons">&#xe8b6;</i></a>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '刷新'}" id="reload"><i class="mdui-icon material-icons">refresh</i></a>
+    <a id="Hidove-more-btn"mdui-menu="{target: '#Hidove-more'}" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">&#xe5d4;</i></a>
+    <ul class="mdui-menu" id="Hidove-more">
+        <li class="mdui-menu-item">
+            <a href="/" class="mdui-ripple">
+              <i class="mdui-menu-item-icon mdui-icon material-icons">&#xe88a;</i>网站首页
+            </a>
+          </li>
+          <li id="clearCache" class="mdui-menu-item">
+            <a href="javascript:;" class="mdui-ripple">
+              <i class="mdui-menu-item-icon mdui-icon material-icons">&#xe872;</i>清理缓存
+            </a>
+          </li>
+          <li id="loginOut" class="mdui-menu-item">
+              <a href="javascript:;" class="mdui-ripple">
+                <i class="mdui-menu-item-icon mdui-icon material-icons">&#xe879;</i>退出
+              </a>
+            </li>
+      </ul>
+  </div>
+</div>
+<!-- 抽屉 -->
+<div class="mdui-drawer" id="left-drawer">
+    {include file="nav"/}
+</div>
+<!-- 搜索框 -->
+<div class="mdui-dialog" id="search">
+    <!-- 输入框 -->
+    <div class="mdui-textfield mdui-textfield-floating-label">
+	  <i class="mdui-icon material-icons">&#xe8b6;</i>
+	  <label class="mdui-textfield-label">搜索</label>
+	  <input id="search-word" class="mdui-textfield-input" type="text" required onkeypress=""/>
+  	  <div class="mdui-textfield-error">关键词不能为空</div>
+	  <div class="mdui-textfield-helper">七龙珠</div>
+	</div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close id="searchBtn">搜索</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var inst = new mdui.Menu('#Hidove-more-btn', '#Hidove-more','position:center');
+$('#Hidove-more-btn').click(function(){
+  inst.open();
+});
+$('#clearCache').click(function(){
+  $.ajax({
+            type:"POST",
+            url:"{:url('admin/index/clearCache')}",
+            data:{
+              0:'index',
+              1:'sort',
+              2:'search',
+            },
+            datatype: "json",
+            //成功返回之后调用的函数             
+            success:function(data){
+                if(data['code']==1){
+                    mdui.snackbar({
+                        message: '清理缓存成功'
+                    });
+                }else{
+                    mdui.snackbar({
+                        message: '清理缓存失败'
+                    });
+                }          
+            },
+            error: function(){
+                //请求出错处理
+                mdui.snackbar({
+                        message: '接口连接失败'
+                });
+            }         
+         });
+});
+$('#loginOut').click(function(){
+    location.href="{:url('admin/login/loginOut')}"
+});
+$('#searchBtn').click(function(){
+  var keyword =document.getElementById('search-word').value;
+  window.open("{:url('index/index/search','','')}/wd/"+ keyword);
+
+});
+$('#search-word').keypress(function(e){
+  if(e.which == 13){
+    $('#searchBtn').click();
+  }
+});
+$('#reload').click(function(){
+  window.location.reload();
+});
+</script>

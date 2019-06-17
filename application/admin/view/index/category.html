@@ -1,0 +1,240 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class=" mdui-clearfix">
+          <div class="Hidove-category mdui-float-left mdui-col-xs-6 mdui-col-sm-3">
+              <ul class="mdui-list" mdui-collapse="{accordion: true}">
+                <!-- 组合导航 -->
+                    <li class="mdui-collapse-item">
+                        <div  id='parent' onclick="modifyNav('0');" class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                            <i class="mdui-list-item-icon mdui-icon material-icons">&#xe88a;</i>
+                            <div id="0" class="mdui-list-item-content">{$category.0.title}</div>
+                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                                {for start="7" end="12"}
+                                <li id='{$i}' onclick="modifyNav('{$i}');" class="mdui-list-item mdui-ripple">{$category[$i]['title']}</li>
+                                {/for}
+                        </ul>
+                    </li>
+                    <li class="mdui-collapse-item">
+                        <div id='parent'onclick="modifyNav('1');" class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                            <i class="mdui-list-item-icon mdui-icon material-icons">&#xe913;</i>
+                            <div id='1' class="mdui-list-item-content">{$category.1.title}</div>
+                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                        </div>
+                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                            {for start="12" end="19"}
+                            <li id='{$i}' onclick="modifyNav('{$i}');" class="mdui-list-item mdui-ripple">{$category[$i]['title']}</li>
+                            {/for}
+                         </ul>
+                    </li>
+                    <!-- 单个导航 -->
+                        <li id='parent' class="mdui-list-item mdui-ripple">
+                          <i class="mdui-list-item-icon mdui-icon material-icons">&#xe88a;</i>
+                          <!-- <li id='2' onclick="modifyNav('2');" class="mdui-list-item mdui-ripple">{$category.2.title}</li> -->
+                          <div id='2' onclick="modifyNav('2');" class="mdui-list-item-content">{$category.2.title}</div>
+                        </li>
+                        <li id='parent' class="mdui-list-item mdui-ripple">
+                          <i class="mdui-list-item-icon mdui-icon material-icons">&#xe871;</i>
+                          <div id='3' onclick="modifyNav('3');" class="mdui-list-item-content">{$category.3.title}</div>
+                        </li>
+                        <li id='parent' class="mdui-list-item mdui-ripple">
+                          <i class="mdui-list-item-icon mdui-icon material-icons">&#xe227;</i>
+                          <div id='4' onclick="modifyNav('4');" class="mdui-list-item-content">{$category.4.title}</div>
+                        </li>
+                        <li id='parent' class="mdui-list-item mdui-ripple">
+                          <i class="mdui-list-item-icon mdui-icon material-icons">&#xe3a9;</i>
+                          <div id='5' onclick="modifyNav('5');" class="mdui-list-item-content">{$category.5.title}</div>
+                        </li>
+                        <li id='parent' class="mdui-list-item mdui-ripple">
+                          <i class="mdui-list-item-icon mdui-icon material-icons">&#xe030;</i>
+                          <div id='6' onclick="modifyNav('6');" class="mdui-list-item-content">{$category.6.title}</div>
+                        </li>
+                </ul>
+            </div>
+            <div class="Hidove-sourceCategory mdui-float-left">
+                <ul class="mdui-list mdui-col-xs-6 mdui-col-sm-3">
+                    {foreach $apiInfo.category as $key =>$value}
+                    <label class="mdui-list-item mdui-ripple mdui-radio">
+                        <div id="s{$value.id}" onclick="modify({$value.id});" class="mdui-list-item-content">{$value.title}</div>
+                        <div class="mdui-checkbox">
+                            <input type="radio" name="group1"/>
+                            <i class="mdui-radio-icon"></i>
+                        </div>
+                    </label>   
+                    {/foreach}        
+                </ul>
+            </div>
+            <div class="Hidove-category-paper mdui-float-left  mdui-col-xs-12 mdui-col-sm-6">
+                <div id="Hidove-category-paper-id"></div>
+                <!-- <div class="mdui-chip">
+                    <span class="mdui-chip-icon mdui-text-truncate">电影</span>
+                     <span class="mdui-chip-title">Example Chip</span>
+                     <span class="mdui-chip-delete"><i class="mdui-icon material-icons">cancel</i></span>
+                </div> -->
+            </div>
+        </div>
+        <div><br/><br/><br/></div>
+        <button id="bind" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">一键绑定</button>
+        <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+        <div><br/><br/><br/></div>
+  </div>
+<script>
+    //导航
+    var nav = {
+            {foreach $category as $key => $value}
+            "{$value.title}" : "{$key}",
+            {/foreach}
+        };
+    var finalNav = JSON.parse( JSON.stringify(nav) );
+    //获取api导航
+    var apiNav ={
+        {foreach $apiInfo.category as $key => $value}
+        "{$value.id}" : "{$value.title}", 
+        {/foreach} 
+    };
+	 // 请保留版权说明
+ if (window.console && window.console.log) {
+    console.log("%c Hidove 余生 Style %c https://www.hidove.cn","color: #fff; margin: 1em 0; padding: 5px 0; background: #3498db;","margin: 1em 0; padding: 5px 0; background: #efefef;");
+    console.log("%c 严禁用于非法用途 %c https://blog.hidove.cn","color: #fff; margin: 1em 0; padding: 5px 0; background: #ffa9be;","margin: 1em 0; padding: 5px 0; background: #efefef;");
+}
+  //点击本地导航
+  var title;
+  function modifyNav(id){
+      title = $('#'+id).text();
+      $('.mdui-list-item-active').removeClass('mdui-list-item-active');
+      $('.Hidove-active').removeClass('Hidove-active');
+      $('#'+id).addClass('Hidove-active');
+      if($('#'+id).parent('#parent').length>0){
+          $('#'+id).parent('#parent').addClass('mdui-list-item-active');
+      }else{
+          $('#'+id).addClass('mdui-list-item-active');
+      }
+  }
+  //点击api导航
+  function modify(id){
+      //id 为api 接口的 分类id navid为本分类id
+      navTitle = $('.Hidove-active').text();
+      navId = $('.Hidove-active').attr('id');
+      sourceTitle = $('#s'+id).text();
+      if(navId){
+          if($('#Hidove-paper-'+navId).length <= 0){
+          var style = '<div id="Hidove-paper-'
+                      + navId  +
+                      '" class="mdui-chip"><span class="mdui-chip-icon mdui-text-truncate">'
+                      + navId +
+                      '</span><span class="mdui-chip-title" value="'
+                      + navTitle +
+                      '=>'
+                      + id +
+                      '">'
+                      + navTitle +
+                      '=>'
+                      + sourceTitle +
+                      `</span><span class="mdui-chip-delete"><i onclick="deletePaper('`
+                      + 'Hidove-paper-'
+                      + navId + 
+                      `');"`
+                      + ' class="mdui-icon material-icons">cancel</i></span></div>';
+          $('#Hidove-category-paper-id').append(style);
+          }else{
+              $('#Hidove-paper-' + navId).children('.mdui-chip-title').text(navTitle +"=>"+ sourceTitle);
+              $('#Hidove-paper-' + navId).children('.mdui-chip-title').attr('value',navTitle +"=>"+ id);
+          }
+      }
+  };
+  //一键绑定
+  $('#bind').click(function(){
+      //收集已存在值
+      var res = {};
+      $('.mdui-chip-title').each(function(){
+          var value =  $(this).attr('value').split('=>');
+          res[value[0]] = value[1];
+      });
+      //开始绑定
+      for(var key in nav){
+          // var replaceKey = ['片','剧','类'];
+          for(var i in apiNav){
+              var keyTmp = key;
+              // 删除最后一位字符 ['片','剧'];
+              keyTmp = keyTmp.substring(0,keyTmp.length-1);
+              if(apiNav[i].indexOf(keyTmp) >= 0){
+                  finalNav[key] = i;
+              }
+          }
+      }
+      //去除重复纸条
+      for(var key in res){
+          delete nav[key];
+      }
+      //插入纸条 nav[key]为 nav的id key为分类名
+      for(var key in nav){
+          var style ='<div id="Hidove-paper-'
+                      + nav[key]  +
+                      '" class="mdui-chip"><span class="mdui-chip-icon mdui-text-truncate">'
+                      + nav[key] +
+                      '</span><span class="mdui-chip-title" value="'
+                      + key +
+                      '=>'
+                      + finalNav[key] +
+                      '">'
+                      + key +
+                      '=>'
+                      + apiNav[finalNav[key]] +
+                      `</span><span class="mdui-chip-delete"><i onclick="deletePaper('`
+                      + 'Hidove-paper-'
+                      + nav[key] + 
+                      `');"`
+                      + ' class="mdui-icon material-icons">cancel</i></span></div>';
+          $('#Hidove-category-paper-id').append(style);
+      }
+  });
+  //删除纸条
+  function deletePaper(id){
+      $('#'+ id).remove();
+  };
+  //ajax提交数据
+  $('#submit').click(function(){
+      //获取纸片的全部值
+      var data = {};
+      $(".mdui-chip-title").each(function(index){
+          var value =  $(this).attr('value').split('=>');
+          var dataTmp = {};
+          dataTmp['title']=value[0];
+          dataTmp['id']=value[1];
+          data[index] = dataTmp;
+      });
+      // return;
+      //提交
+      $.ajax({
+          type:"POST",
+          url:"{:url('admin/index/updateCategory')}",
+          data:data,
+          datatype: "json",
+          //成功返回之后调用的函数             
+          success:function(data){
+              if(data['code']==1){
+                  mdui.snackbar({
+                      message: '更新成功'
+                  });
+              }else{
+                  mdui.snackbar({
+                      message: '更新失败'
+                  });
+              }          
+          },
+          error: function(){
+              //请求出错处理
+              mdui.snackbar({
+                      message: '接口连接失败'
+              });
+          }         
+       });
+
+  });
+    </script>
+{/block}

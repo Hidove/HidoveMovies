@@ -1,0 +1,52 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class="mdui-typo">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">&#xe254;</i>
+                <label class="mdui-textfield-label">HTML代码</label>
+                <textarea id="Hidove-code-input" class="mdui-textfield-input" type="text">{$Hidove['foot-code']|stripslashes|html_entity_decode}</textarea>
+                <div class="mdui-textfield-helper">可加入统计代码</div>
+            </div>
+            <div style="margin:20px 0px 0px 50px;text-align:left;"> 
+            <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+            </div>
+    </div>
+  </div>
+  <script>
+$('#submit').click(function(){
+      var data = $('#Hidove-code-input').val();
+      $.ajax({
+          type:"POST",
+          url:"{:url('admin/index/updateSet')}",
+          data:{
+              'foot-code':data,
+          },
+          datatype: "json",
+          //成功返回之后调用的函数             
+          success:function(data){
+              if(data['code']==1){
+                  mdui.snackbar({
+                      message: '更新成功'
+                  });
+              }else{
+                  mdui.snackbar({
+                      message: '更新失败'
+                  });
+              }          
+          },
+          error: function(){
+              //请求出错处理
+              mdui.snackbar({
+                      message: '接口连接失败'
+              });
+          }         
+       });
+
+  });
+  </script>
+</script>
+{/block}

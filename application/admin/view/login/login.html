@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登陆 - 后台管理中心 - Hidove影视系统</title>
+    <meta name="description" content="{$Hidove.keywords}" />
+    <meta name="keywords" content="{$Hidove.description}" />
+    <link rel="icon" href="{$Hidove.favicon}">
+    <link href="{$Hidove.template}css/backTop.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/css/mdui.min.css">
+	<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.2/js/mdui.min.js"></script>
+	<link rel="stylesheet" href="{$Hidove.template}css/style.css">
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+<div class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar mdui-color-theme">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">menu</i></a>
+            <a href="javascript:;" class="mdui-typo-headline">登陆</a>
+            <a href="/" class="mdui-typo-title mdui-hidden-xs">{$Hidove.title}</a>
+        <div class="mdui-toolbar-spacer"></div>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '搜索'}" mdui-dialog="{target: '#search'}"><i class="mdui-icon material-icons">search</i></a>
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '刷新'}" id="reload"><i class="mdui-icon material-icons">refresh</i></a>
+    </div>
+</div>
+    <div class="mdui-container-fluid">
+        <div class="mdui-card Hidove-admin-login mdui-hoverable">
+            <div class="Hidove-admin-login-hearder mdui-clearfix">
+                <img class="mdui-img-circle Hidove-login-avatar" src="{$Hidove.avatar}"/>
+                <!-- <div class=""><h2>登陆</h2></div> -->
+            </div>
+            <div class="Hidove-admin-login-pannel">
+                    <div class="Hidove-admin-login-input mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">User name</label>
+                            <input id ="username" class="mdui-textfield-input" type="text" required/>
+                            <div class="mdui-textfield-error">用户名不能为空</div>
+                    </div>
+                     <div class="Hidove-admin-login-input mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">Password</label>
+                            <input id ="password" class="mdui-textfield-input" type="password" required/>
+                            <div class="mdui-textfield-error">密码不能为空</div>
+                     </div>
+                     <div class="Hidove-admin-login-submit">
+                        <button id="Hidove-admin-login-submit" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent mdui-hoverable">Login</button>
+                     </div>
+            </div>
+        </div>
+</div>
+    <!-- 搜索框 -->
+<div class="mdui-dialog" id="search">
+    <!-- 输入框 -->
+    <div class="mdui-textfield mdui-textfield-floating-label">
+	  <i class="mdui-icon material-icons">search</i>
+	  <label class="mdui-textfield-label">搜索</label>
+	  <input id="search-word" class="mdui-textfield-input" type="text" required onkeypress=""/>
+  	  <div class="mdui-textfield-error">关键词不能为空</div>
+	  <div class="mdui-textfield-helper">七龙珠</div>
+	</div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close id="searchBtn">搜索</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  // 请保留版权说明
+  if (window.console && window.console.log) {
+      console.log("%c Hidove 余生 Style %c https://www.hidove.cn","color: #fff; margin: 1em 0; padding: 5px 0; background: #3498db;","margin: 1em 0; padding: 5px 0; background: #efefef;");
+      console.log("%c 严禁用于非法用途 %c https://blog.hidove.cn","color: #fff; margin: 1em 0; padding: 5px 0; background: #ffa9be;","margin: 1em 0; padding: 5px 0; background: #efefef;");
+  }
+$('#searchBtn').click(function(){
+  var keyword =document.getElementById('search-word').value;
+  window.open("{:url('index/index/search','','')}/wd/"+ keyword);
+
+});
+$('#search-word').keypress(function(e){
+  if(e.which == 13){
+    $('#searchBtn').click();
+  }
+});
+$('#reload').click(function(){
+  window.location.reload();
+});
+$('#password').keypress(function(e){
+  if(e.which == 13){
+    $('#Hidove-admin-login-submit').click();
+  }
+});
+$('#Hidove-admin-login-submit').click(function(){
+  var data = {
+    'username':$('#username').val(),
+    'password':$('#password').val(),
+  };
+  $.ajax({
+    url:"{:url('admin/login/login')}",
+    type:'post',
+    data:data,
+    datatype:'json',
+    success:function(data){
+      if(data['code']==1){
+        mdui.snackbar({
+                message: data['msg']
+        });
+        location.href="{:url('admin/index/index')}";
+      }else{
+        mdui.snackbar({
+                message: data['msg']
+        });
+      }
+    },
+    error:function(){
+      mdui.snackbar({
+              message: '接口连接失败'
+      });
+    },
+  });
+});
+</script>
+</body>
+</html>

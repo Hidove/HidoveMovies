@@ -1,0 +1,122 @@
+body{
+	margin: 0px;
+}
+a{ 
+	text-decoration:none; 
+	color:#333; 
+	} 
+.mdui-appbar{
+color: #969896;
+}
+/* 调整网格边距 */
+.Hidove-video-list .mdui-col,
+.Hidove-video-list [class*="mdui-col-xs-"],
+.Hidove-video-list [class*="mdui-col-sm-"],
+.Hidove-video-list [class*="mdui-col-md-"],
+.Hidove-video-list [class*="mdui-col-lg-"],
+.Hidove-video-list [class*="mdui-col-xl-"] {
+	/* padding: 5px!important; */
+	/* padding: 5px auto!important; */
+	/* margin:  5px auto!important; */
+	padding-right:0px;
+	padding-left:0px;
+	width: 134px;
+	height: 167px;
+}
+.Hidove-video-list img{
+	width: 134px;
+	height: 167px;
+}
+.Hidove-info-card{
+	width: auto;
+	margin-bottom: 20px;
+}
+ul li{
+	list-style: none;
+}
+li{
+	list-style: none;
+}
+.mdui-card-primary{
+	padding: 0px;
+}
+.Hidove-info-li{
+	display: inline;
+}
+.Hidove-info-url{
+	text-align: left;
+	padding-top: 10px;
+	/* padding: 10px auto; */
+	/* border: red solid; */
+}
+.Hidove-info-ul{
+	margin: 0px !important;
+}
+.Hidove-info-url-list{
+	margin: 5px;
+}
+.Hidove-info-blockquote{
+	margin: 20px 0px !important;
+}
+.Hidove-search-btn{
+	margin-left: 30px;
+}
+.Hidove-search-input{
+	width: 50%;
+}
+.Hidove-video-list-info{
+	margin: 8px;
+}
+.Hidove-container{
+	/* padding: 0px; */
+}
+.Hidove-video-col{
+	margin: 0px 8px;
+}
+.Hidove-video-list{
+	display:table;
+	margin:3px;
+	padding-right:0px;
+	padding-left:0px;
+}
+.Hidove-video-cover:hover{
+    transform: scale(1.05);
+}
+
+.Hidove-video-cover{
+    border: none;
+	border-radius: 6px;
+    box-shadow: 6px 6px 20px #999;
+    position: relative;
+	background-size: 100% 100%;
+	cursor: pointer;  
+    transition: all 0.6s;
+}
+.Hidove-video-list-title{
+	text-align: center;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 134px;
+	margin-top: 3px;
+}
+
+.Hidove-avatar{
+    -webkit-transition: 0.4s;
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out; 
+}
+.Hidove-avatar:hover{
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+}
+.Hidove-avatar{
+    animation-timing-function:cubic-bezier(0,0,.07,1)!important;
+}
+.Hidove-avatar:hover{
+    transform:rotate(360deg) scale(1.2);
+    border-width:5px;
+    animation:avatar .5s
+}

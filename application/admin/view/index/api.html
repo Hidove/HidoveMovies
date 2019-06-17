@@ -1,0 +1,78 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class="mdui-typo">
+            <li class="mdui-list-item mdui-ripple"><strong> 接口管理</strong></li>
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">接口地址</label>
+                <input id ="api" name="title"  class="mdui-textfield-input Hidove-set-input" type="text" value="{$Hidove.api}"/>
+            </div>
+            <!-- <ul class="mdui-list"> -->
+                    <li class="mdui-list-item mdui-ripple">
+                      <i class="mdui-list-item-icon mdui-icon material-icons">&#xe2c2;</i>
+                      <div class="mdui-list-item-content">资源列表顺序 PS：开启 = 最新的在前</div>
+                      <label class="mdui-switch">
+                        <input id = "order" type="checkbox"/>
+                        <i class="mdui-switch-icon"></i>
+                      </label>
+                    </li>
+                    <li class="mdui-list-item mdui-ripple">
+                      <i class="mdui-list-item-icon mdui-icon material-icons">&#xe813;</i>
+                      <div class="mdui-list-item-content">使用缓存</div>
+                      <label class="mdui-switch">
+                        <input id="cache" type="checkbox"/>
+                        <i class="mdui-switch-icon"></i>
+                      </label>
+                    </li>
+            <!-- </ul> -->
+            <div><br/><br/></div>
+            <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+  </div>
+  <div style="height: 100px"></div>
+  </div>
+<script>
+//判断选中状态
+if('{$Hidove.order}'=='true'){
+    $('#order').attr('checked','true');
+}
+if('{$Hidove.cache}'=='true'){
+    $('#cache').attr('checked','true');
+}
+//ajax提交
+$('#submit').click(function(){
+    var data = {
+        'api' : $("#api").val(),
+        'order' : $("#order").is(':checked'),
+        'cache' : $("#cache").is(':checked'),
+    };
+    $.ajax({
+        type:"POST",
+        url:"{:url('admin/index/updateSet')}",
+        data:data,
+        datatype: "json",
+        //成功返回之后调用的函数             
+        success:function(data){
+            if(data['code']==1){
+                mdui.snackbar({
+                    message: '更新成功'
+                });
+            }else{
+                mdui.snackbar({
+                    message: '更新失败'
+                });
+            }          
+        },
+        error: function(){
+            //请求出错处理
+            mdui.snackbar({
+                    message: '接口连接失败'
+            });
+        }         
+     });
+
+});
+</script>
+{/block}

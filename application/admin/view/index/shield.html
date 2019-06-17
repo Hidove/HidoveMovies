@@ -1,0 +1,141 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class="Hidove-category mdui-float-left mdui-col-xs-6 mdui-col-sm-3">
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+          <!-- 组合导航 -->
+              <li class="mdui-collapse-item">
+                  <div  id='parent' class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                      <i class="mdui-list-item-icon mdui-icon material-icons">&#xe88a;</i>
+                      <div id="0" onclick="modifyNav('0');" class="mdui-list-item-content">{$category.0.title}</div>
+                      <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                          {for start="7" end="12"}
+                          <li id='{$i}' onclick="modifyNav('{$i}');" class="mdui-list-item mdui-ripple">{$category[$i]['title']}</li>
+                          {/for}
+                  </ul>
+              </li>
+              <li class="mdui-collapse-item">
+                  <div id='parent' class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                      <i class="mdui-list-item-icon mdui-icon material-icons">&#xe913;</i>
+                      <div id='1' onclick="modifyNav('1');" class="mdui-list-item-content">{$category.1.title}</div>
+                      <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                      {for start="12" end="19"}
+                      <li id='{$i}' onclick="modifyNav('{$i}');" class="mdui-list-item mdui-ripple">{$category[$i]['title']}</li>
+                      {/for}
+                   </ul>
+              </li>
+              <!-- 单个导航 -->
+                  <li id='parent' class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">&#xe88a;</i>
+                    <!-- <li id='2' onclick="modifyNav('2');" class="mdui-list-item mdui-ripple">{$category.2.title}</li> -->
+                    <div id='2' onclick="modifyNav('2');" class="mdui-list-item-content">{$category.2.title}</div>
+                  </li>
+                  <li id='parent' class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">&#xe871;</i>
+                    <div id='3' onclick="modifyNav('3');" class="mdui-list-item-content">{$category.3.title}</div>
+                  </li>
+                  <li id='parent' class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">&#xe227;</i>
+                    <div id='4' onclick="modifyNav('4');" class="mdui-list-item-content">{$category.4.title}</div>
+                  </li>
+                  <li id='parent' class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">&#xe3a9;</i>
+                    <div id='5' onclick="modifyNav('5');" class="mdui-list-item-content">{$category.5.title}</div>
+                  </li>
+                  <li id='parent' class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">&#xe030;</i>
+                    <div id='6' onclick="modifyNav('6');" class="mdui-list-item-content">{$category.6.title}</div>
+                  </li>
+          </ul>
+      </div>
+      <div class="Hidove-Category-shield mdui-float-left">
+        <div id="Hidove-Category-shield-list" class="mdui-list mdui-col-xs-12 mdui-col-sm-12">
+            {foreach $category as $key => $value}
+            {eq name="$value.shield" value="true"}
+            <li id="li-shield-{$value.title}" class="mdui-list-item mdui-ripple">
+                <div class="Hidove-shield-value mdui-list-item-content">{$value.title}</div>
+                <i onclick="shieldDelete('{$value.title}');" class="mdui-list-item-icon mdui-icon material-icons">close</i>
+            </li>           
+            {/eq}           
+            {/foreach}
+          </div>   
+    </div>
+</div>
+            <div><br/><br/><br/></div>
+            <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+            <div><br/><br/><br/></div>
+        
+<script>
+function modifyNav(navId){
+    var nav ={
+        {foreach $category as $key => $value}
+            {$key}:'{$value.title}',
+        {/foreach}
+    }
+    var shield=[];
+    $('.Hidove-shield-value').each(function(index){
+        shield[index] =  $(this).text();
+    });
+    panDuan = $.inArray(nav[navId], shield);
+    if(panDuan==-1){
+        var style = '<li id = "li-shield-'+nav[navId] + '" class="mdui-list-item mdui-ripple"><div class="Hidove-shield-value mdui-list-item-content">'+ nav[navId] + '</div><i onclick="shieldDelete('+"'"+ nav[navId] +"'"+');" class="mdui-list-item-icon mdui-icon material-icons">close</i></li>';
+        $('#Hidove-Category-shield-list').append(style);
+        
+    }
+}
+</script>
+ <script>
+function shieldDelete (shieldId){
+  $('#li-shield-'+ shieldId ).remove();
+}
+//ajax提交数据
+$('#submit').click(function(){
+      //获取屏蔽列表的全部值
+      var data = {};
+      $(".Hidove-shield-value").each(function(index){
+          var dataTmp ={};
+          dataTmp['title'] = $(this).text();
+          dataTmp['shield'] = 'true';
+          data[index] = dataTmp;
+          // var value =  $(this).attr('value').split('=>');
+          // data[value[0]] = value[1];
+      });
+      // data = JSON.stringify(data);
+      // console.log(data);
+      // return;
+      //提交
+      $.ajax({
+          type:"POST",
+          url:"{:url('admin/index/updateCategory')}",
+          data:data,
+          datatype: "json",
+          //成功返回之后调用的函数             
+          success:function(data){
+              if(data['code']==1){
+                  mdui.snackbar({
+                      message: '更新成功'
+                  });
+              }else{
+                  mdui.snackbar({
+                      message: '更新失败'
+                  });
+              }          
+          },
+          error: function(){
+              //请求出错处理
+              mdui.snackbar({
+                      message: '接口连接失败'
+              });
+          }         
+       });
+
+  });
+  </script>
+{/block}

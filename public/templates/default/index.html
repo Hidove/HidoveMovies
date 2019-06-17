@@ -1,0 +1,66 @@
+{extend name="./templates/default/base.html" /}
+{block name="title"}{$Hidove.title} - {$Hidove.subtitle}{/block}
+{block name="main"}
+<div class="mdui-container-fluid Hidove-container">
+  <!-- 计算 -->
+<div class="mdui-typo Hidove-video-list-info">
+    {if $Hi.pagecount==''}
+    <p>
+      <strong>数据获取</strong><code>异常</code>
+      <strong>请</strong><code>重试</code>
+    </p>
+    {else /}
+  <p>
+    <strong>当前第</strong><code>{$Hi.page}</code><strong>页</strong>
+    &nbsp;&nbsp;
+    <strong>总共：</strong><code>{$Hi.pagecount}</code><strong>页</strong>
+    &nbsp;&nbsp;
+    <strong>共：</strong><code>{$Hi.recordcount}</code><strong>条数据</strong>
+    &nbsp;&nbsp;
+    <strong>数据类型：</strong><code>{$Hi.dataType}</code></p>
+    {/if}
+</div>
+   <div class="mdui-clearfix Hidove-video-col">
+      {foreach $video as $key =>$vo}
+            <div class="Hidove-video-list mdui-float-left">
+              <a href="{:url('index/index/info',['id'=>$vo.id])}">
+                <img class="mdui-img-fluid Hidove-video-cover" src="{$vo.pic}"/>
+              <div class="Hidove-video-list-title">{$vo.name}</div>
+              </a>
+          </div>
+          {/foreach}
+    </div>
+  </div>
+    <!-- 底部导航 -->
+    <div class="mdui-bottom-nav mdui-color-theme">
+        <a href="{:url('index/index/index',['page'=>($Hi.page-1)])}" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5c4;</i>
+          <label>Preview</label>
+        </a>
+        <a href="" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5d5;</i>
+          <label>Refresh</label>
+        </a>
+        <a href="{:url('index/index/index',['page'=>($Hi.page+1)])}" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5c8;</i>
+          <label>Next</label>
+        </a>
+      </div>
+      <!--  -->
+</div>
+<script>
+//判断是否是手机
+var ua = navigator.userAgent;
+var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+isMobile = isIphone || isAndroid;
+//判断
+if(isMobile){
+  $('.Hidove-container').css({"padding":"0px"});
+  $('.Hidove-video-list').css({"width":"107px"});
+  $('.Hidove-video-list-title').css({"width":"107px"});
+  $('.Hidove-video-cover').css({"width":"107px","height":"148px"});
+}
+</script>
+{/block}

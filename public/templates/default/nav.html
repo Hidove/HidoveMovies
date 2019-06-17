@@ -1,0 +1,51 @@
+<div class="mdui-list" mdui-collapse="{accordion: true}" style="margin-bottom: 76px;">
+    <!-- 组合导航 -->
+        <div class="mdui-collapse-item ">
+          <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-blue">&#xe569;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.0.title}</div>
+            <i class="mdui-collapse-item-arrow mdui-icon material-icons">&#xe313;</i>
+          </div>
+          <div class="mdui-collapse-item-body mdui-list">
+            {for start="7" end="14"}
+            <a href="{:url('index/index/sort',['id' => $Hidove.category[$i]['id']])}" class="mdui-list-item mdui-ripple ">{$Hidove.category[$i]['title']}</a>
+            {/for}
+          </div>
+        </div>
+    
+        <div class="mdui-collapse-item ">
+          <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-deep-orange">&#xe53b;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.1.title}</div>
+            <i class="mdui-collapse-item-arrow mdui-icon material-icons">&#xe313;</i>
+          </div>
+          <div class="mdui-collapse-item-body mdui-list">
+            {for start="14" end="21"}
+            <a href="{:url('index/index/sort',['id' => $Hidove.category[$i]['id']])}" class="mdui-list-item mdui-ripple ">{$Hidove.category[$i]['title']}</a>
+            {/for}
+          </div>
+        </div>
+        <!-- 单个 -->
+        <a href="{:url('index/index/sort',['id' => $Hidove.category.2.id])}" class="mdui-list-item">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-amber">&#xe1bd;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.2.title}</div>
+        </a>
+        <a href="{:url('index/index/sort',['id' => $Hidove.category.3.id])}" class="mdui-list-item">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-green">&#xe87b;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.3.title}</div>
+        </a>
+        <a href="{:url('index/index/sort',['id' => $Hidove.category.4.id])}" class="mdui-list-item">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">&#xe423;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.4.title}</div>
+        </a>
+        <a href="{:url('index/index/sort',['id' => $Hidove.category.5.id])}" class="mdui-list-item">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-gray">&#xe424;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.5.title}</div>
+        </a>
+        <a href="{:url('index/index/sort',['id' => $Hidove.category.6.id])}" class="mdui-list-item">
+            <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-cyan">&#xe405;</i>
+            <div class="mdui-list-item-content">{$Hidove.category.6.title}</div>
+        </a>
+
+
+</div>

@@ -1,0 +1,45 @@
+{extend name="./templates/default/base.html" /}
+{block name="title"}
+{if $Hi.keyword}{$Hi.keyword} 的搜索结果
+{else /}搜索
+{/if}
+- {$Hidove.subtitle}{/block}
+{block name="main"}
+<div class="mdui-container-fluid" style="margin-top:20px;">
+<!-- <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">Button</button> -->
+<div class="mdui-textfield mdui-textfield-floating-label mdui-clearfix">
+        <label class="mdui-textfield-label">Please enter keywords</label>
+        <input id="search-input" class="mdui-textfield-input mdui-float-left Hidove-search-input" type="text"/>
+        <button id="search-btn" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent Hidove-search-btn">搜索</button>
+</div>
+    
+        {if $video}
+        <div class="mdui-typo">
+            <p>总共<code>{$video|count}</code>条数据</p>
+        </div>
+            {foreach $video as $key =>$value}
+            <a class="" href="{:url('index/index/info',['id' => $value.id])}">
+            <div class="mdui-chip">
+                <span class="mdui-chip-icon">{$key}</span>
+                <span class="mdui-chip-title">{$value.name}</span>
+            </div></a>
+        {/foreach}
+         {else /}
+         <div class="mdui-typo">
+            <p>总共<code>{$video|count}</code>条数据</p>
+            <p>无结果</p>
+        </div>
+        {/if}
+</div>
+<script>
+$('#search-btn').click(function(){
+    var keyword =  $("#search-input").val();
+    location.href = "{:url('index/index/search','','')}/wd/"+keyword;
+});
+$('#search-input').keypress(function(e){
+    if(e.which == 13){
+    	$('#search-btn').click();
+    }
+	});
+</script>
+{/block}

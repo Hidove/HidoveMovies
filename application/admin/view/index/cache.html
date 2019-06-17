@@ -1,0 +1,214 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class="mdui-typo">
+          <li class="mdui-list-item mdui-ripple"><strong> 缓存管理</strong></li>
+          <div class="mdui-tab mdui-tab-full-width" mdui-tab>
+              <a id="index-nav" href="#" class="mdui-ripple">首页缓存</a>
+              <a id="sort-nav" href="#" class="mdui-ripple">分类缓存</a>
+              <a id="info-nav" href="#" class="mdui-ripple">详情页缓存</a>
+              <a id="search-nav" href="#" class="mdui-ripple">搜索页缓存</a>
+              <a id="clear-nav" href="#" class="mdui-ripple">清理缓存</a>
+            </div>
+          <div id="index-div" class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">首页缓存</label>
+              <input id="index-input" class="mdui-textfield-input" type="text"/>
+              <div class="mdui-textfield-helper">单位：秒 0 为永久</div>
+              <label class="mdui-switch">是否开启缓存
+                  <input id="index-checkbox" type="checkbox"/>
+                  <i class="mdui-switch-icon"></i>
+                </label>
+          </div>
+          <div id="sort-div" class="mdui-textfield mdui-textfield-floating-label mdui-hidden">
+              <label class="mdui-textfield-label">分类缓存</label>
+              <input id="sort-input" class="mdui-textfield-input" type="text"/>
+              <div class="mdui-textfield-helper">单位：秒 0 为永久</div>
+              <label class="mdui-switch">是否开启缓存
+                <input id="sort-checkbox" type="checkbox"/>
+                <i class="mdui-switch-icon"></i>
+              </label>
+          </div>
+          <div id="info-div" class="mdui-textfield mdui-textfield-floating-label mdui-hidden">
+              <label class="mdui-textfield-label">详情页缓存</label>
+              <input id="info-input" class="mdui-textfield-input" type="text"/>
+              <div class="mdui-textfield-helper">单位：秒 0 为永久</div>
+              <label class="mdui-switch">是否开启缓存
+                <input id="info-checkbox" type="checkbox"/>
+                <i class="mdui-switch-icon"></i>
+              </label>
+          </div>
+          <div id="search-div" class="mdui-textfield mdui-textfield-floating-label mdui-hidden">
+              <label class="mdui-textfield-label">搜索页缓存</label>
+              <input id="search-input" class="mdui-textfield-input" type="text"/>
+              <div class="mdui-textfield-helper">单位：秒 0 为永久</div>
+              <label class="mdui-switch">是否开启缓存
+                <input id="search-checkbox" type="checkbox"/>
+                <i class="mdui-switch-icon"></i>
+              </label>
+            </div>
+            <div id="clear-div" class="mdui-textfield mdui-textfield-floating-label mdui-hidden">
+                
+                <label class="Hidove-checkbox mdui-checkbox">
+                    <input value="index" type="checkbox" checked/>
+                    <i class="mdui-checkbox-icon"></i>
+                    首页缓存
+                </label>
+                <label class="Hidove-checkbox mdui-checkbox">
+                    <input value="sort" type="checkbox" checked/>
+                    <i class="mdui-checkbox-icon"></i>
+                    分类缓存
+                </label>
+                <label class="Hidove-checkbox mdui-checkbox">
+                    <input value="search" type="checkbox" checked/>
+                    <i class="mdui-checkbox-icon"></i>
+                    搜索页缓存
+                </label>
+                <label class="Hidove-checkbox mdui-checkbox">
+                    <input value="info" type="checkbox"/>
+                    <i class="mdui-checkbox-icon"></i>
+                    详情页缓存
+                </label>
+            </div>
+          <div><br/><br/></div>
+          <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+          <button id="clear" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">清理缓存</button>
+  </div>
+  </div>
+  <script>
+$('#clear').click(function(){
+// var arr ={};
+var data = {};
+$('.Hidove-checkbox').children('input').each(function(index){
+  if($(this).prop('checked')){
+    data[index] = $(this).val();
+  }
+});
+//ajax提交数据
+$.ajax({
+        type:"POST",
+        url:"{:url('admin/index/clearCache')}",
+        data:data,
+        datatype: "json",
+        //成功返回之后调用的函数             
+        success:function(data){
+            if(data['code']==1){
+                mdui.snackbar({
+                    message: '清理缓存成功'
+                });
+            }else{
+                mdui.snackbar({
+                    message: '清理缓存失败'
+                });
+            }          
+        },
+        error: function(){
+            //请求出错处理
+            mdui.snackbar({
+                    message: '接口连接失败'
+            });
+        }         
+     });
+});
+//判断选中状态
+if("{$Hidove['cache-index']}"=='true'){
+    $('#index-checkbox').attr('checked','true');
+}
+if("{$Hidove['cache-sort']}"=='true'){
+    $('#sort-checkbox').attr('checked','true');
+}
+if("{$Hidove['cache-info']}"=='true'){
+    $('#info-checkbox').attr('checked','true');
+}
+if("{$Hidove['cache-search']}"=='true'){
+    $('#search-checkbox').attr('checked','true');
+}
+$('#index-input').val("{$Hidove['cache-index-time']}");
+$('#sort-input').val("{$Hidove['cache-sort-time']}");
+$('#info-input').val("{$Hidove['cache-info-time']}");
+$('#search-input').val("{$Hidove['cache-search-time']}");
+//选项卡切换
+$('#index-nav').click(function(){
+  removeClass();
+  $('#sort-div').addClass('mdui-hidden');
+  $('#search-div').addClass('mdui-hidden');
+  $('#clear-div').addClass('mdui-hidden');
+  $('#info-div').addClass('mdui-hidden');
+});
+$('#sort-nav').click(function(){
+  removeClass();
+  $('#index-div').addClass('mdui-hidden');
+  $('#search-div').addClass('mdui-hidden');
+  $('#clear-div').addClass('mdui-hidden');
+  $('#info-div').addClass('mdui-hidden');
+});
+$('#info-nav').click(function(){
+  removeClass();
+  $('#sort-div').addClass('mdui-hidden');
+  $('#search-div').addClass('mdui-hidden');
+  $('#clear-div').addClass('mdui-hidden');
+  $('#index-div').addClass('mdui-hidden');
+});
+$('#search-nav').click(function(){
+  removeClass();
+  $('#index-div').addClass('mdui-hidden');
+  $('#sort-div').addClass('mdui-hidden');
+  $('#info-div').addClass('mdui-hidden');
+  $('#clear-div').addClass('mdui-hidden');
+});
+$('#clear-nav').click(function(){
+  removeClass();
+  $('#index-div').addClass('mdui-hidden');
+  $('#sort-div').addClass('mdui-hidden');
+  $('#info-div').addClass('mdui-hidden');
+  $('#search-div').addClass('mdui-hidden');
+});
+function removeClass(){
+  $('#index-div').removeClass('mdui-hidden');
+  $('#sort-div').removeClass('mdui-hidden');
+  $('#info-div').removeClass('mdui-hidden');
+  $('#search-div').removeClass('mdui-hidden');
+  $('#clear-div').removeClass('mdui-hidden');
+};
+//ajax提交数据
+$('#submit').click(function(){
+    var data = {
+        'cache-index-time' : $("#index-input").val(),
+        'cache-sort-time' : $("#sort-input").val(),
+        'cache-info-time' : $("#info-input").val(),
+        'cache-search-time' : $("#search-input").val(),
+        'cache-index' : $("#index-checkbox").is(':checked'),
+        'cache-sort' : $("#sort-checkbox").is(':checked'),
+        'cache-info' : $("#info-checkbox").is(':checked'),
+        'cache-search' : $("#search-checkbox").is(':checked'),
+    };
+    $.ajax({
+        type:"POST",
+        url:"{:url('admin/index/updateSet')}",
+        data:data,
+        datatype: "json",
+        //成功返回之后调用的函数             
+        success:function(data){
+            if(data['code']==1){
+                mdui.snackbar({
+                    message: '更新成功'
+                });
+            }else{
+                mdui.snackbar({
+                    message: '更新失败'
+                });
+            }          
+        },
+        error: function(){
+            //请求出错处理
+            mdui.snackbar({
+                    message: '接口连接失败'
+            });
+        }         
+     });
+
+});
+  </script>
+{/block}

@@ -1,0 +1,22 @@
+{extend name="base" /}
+{block name="title"}后台管理中心 - Hidove影视系统{/block}
+{block name="main"}
+<div class="mdui-container-fluid">
+</div>
+  <div class="mdui-container">
+      <div class="mdui-typo">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <i class="mdui-icon material-icons">mode_edit</i>
+                <label class="mdui-textfield-label">LINK</label>
+                <textarea id="Hidove-code-input" class="mdui-textfield-input" type="text"></textarea>
+                <div class="mdui-textfield-helper">LINK</div>
+            </div>
+            <div style="margin:20px 0px 0px 50px;text-align:left;"> 
+            <button id="submit" class="Hidove-admin-btn mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">提交</button>
+            </div>
+    </div>
+  </div>
+  <script>
+  var inst = new mdui.Drawer('#drawer');
+  </script>
+{/block}
