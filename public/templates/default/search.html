@@ -14,16 +14,30 @@
 </div>
     
         {if $video}
-        <div class="mdui-typo">
-            <p>总共<code>{$video|count}</code>条数据</p>
-        </div>
-            {foreach $video as $key =>$value}
-            <a class="" href="{:url('index/index/info',['id' => $value.id])}">
-            <div class="mdui-chip">
-                <span class="mdui-chip-icon">{$key}</span>
-                <span class="mdui-chip-title">{$value.name}</span>
-            </div></a>
-        {/foreach}
+            {if count($video) == count($video, 1)}
+                <div class="mdui-typo">
+                    <p>总共<code>1</code>条数据</p>
+                </div>
+                <a class="" href="{:url('index/index/info',['id' => $video.id])}">
+                    <div class="mdui-chip">
+                        <span class="mdui-chip-icon">0</span>
+                        <span class="mdui-chip-title">{$video.name}</span>
+                    </div>
+                </a>
+            {else}
+                <div class="mdui-typo">
+                    <p>总共<code>{$video|count}</code>条数据</p>
+                </div>
+                {foreach $video as $key =>$value}
+                    <a class="" href="{:url('index/index/info',['id' => $value.id])}">
+                        <div class="mdui-chip">
+                            <span class="mdui-chip-icon">{$key}</span>
+                            <span class="mdui-chip-title">{$value.name}</span>
+                        </div>
+                    </a>
+                {/foreach}
+            {/if}
+                
          {else /}
          <div class="mdui-typo">
             <p>总共<code>{$video|count}</code>条数据</p>
