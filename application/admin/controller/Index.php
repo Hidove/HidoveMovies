@@ -144,7 +144,7 @@ class index extends Controller
             foreach ($data as $key => $value){
                 if ( isset($value['shield']) ){
                     # 防止重复, 进行初始化，将屏蔽的分类全部去除
-                    foreach ($category as$key =>&$vo){
+                    foreach ($category as &$vo){
                         $vo['shield'] = 'false';
                     }
                     break;
@@ -193,7 +193,6 @@ class index extends Controller
     public function shield()
     {
         $category = category('index');
-//        dump($category);die();
         $Hidove = Hidove('admin');
         $apiInfo = apiInfo('array');
         $this->assign([

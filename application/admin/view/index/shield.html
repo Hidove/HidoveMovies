@@ -104,11 +104,14 @@ $('#submit').click(function(){
           dataTmp['title'] = $(this).text();
           dataTmp['shield'] = 'true';
           data[index] = dataTmp;
-          // var value =  $(this).attr('value').split('=>');
-          // data[value[0]] = value[1];
       });
-      // data = JSON.stringify(data);
-      // console.log(data);
+      //判断data是否为空，为空代表全部开放
+      if($.isEmptyObject(data)){
+          var dataTmp ={};
+          dataTmp['title'] = 'all';
+          dataTmp['shield'] = 'false';
+          data[0]=dataTmp;
+      }
       // return;
       //提交
       $.ajax({
