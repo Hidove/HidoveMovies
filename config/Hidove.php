@@ -1,7 +1,6 @@
 <?php
 return [
-'api1' => 'http://127.0.0.13/api.html',
-'api' => 'http://www.kukuzy.com/inc/api.php',
+'api' => 'http://www.zdziyuan.com/inc/api_zuidam3u8.php',
 'template' => 'default',
 'playerUrl' => 'https://www.hidove.cn/api/player/?url=',
 'title' => 'Hidove影视',
