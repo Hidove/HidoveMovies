@@ -1,7 +1,7 @@
 <?php
 return [
 'api1' => 'http://127.0.0.13/api.html',
-'api' => 'http://www.zdziyuan.com/inc/s_api_zuidam3u8.php',
+'api' => 'http://www.kukuzy.com/inc/api.php',
 'template' => 'default',
 'playerUrl' => 'https://www.hidove.cn/api/player/?url=',
 'title' => 'Hidove影视',
@@ -13,14 +13,14 @@ return [
 'password' => 'c1bc9fd5e85637c3c03ae8e2bf2357f7',
 'avatar' => 'http://q2.qlogo.cn/headimg_dl?dst_uin=821455965&spec=100',
 'order' => 'true',
-'cache' => 'true',
+'cache' => 'false',
 'cache-index' => 'true',
-'cache-index-time' => '3600',
+'cache-index-time' => '120',
 'cache-sort' => 'true',
-'cache-sort-time' => '3600',
+'cache-sort-time' => '5',
 'cache-info' => 'true',
-'cache-info-time' => '86400',
+'cache-info-time' => '5',
 'cache-search' => 'true',
-'cache-search-time' => '3600',
+'cache-search-time' => '5',
 'foot-code' => '',
 ];

@@ -1,6 +1,12 @@
-** 说明 **
+**说明**
+
 这款程序是我闲暇时写的，采用了ThinkPHP框架5.1、MDUI框架
 如有问题请留言
+
+**Blog**
+
+<https://blog.hidove.cn/post/493>
+
 ![mm][1]
 + 运行环境 PHP
 + PHP版本 7.2 
@@ -11,6 +17,12 @@
 + 分类绑定
 + 列表倒序
 + 支持缓存、减少服务器压力
+
+**Tips**
+
+>后台地址：/admin
+>默认账号：admin 密码：Hidove
+
 ## 演示
 <http://v.abcyun.cc>
 ![1][2]
@@ -21,7 +33,9 @@
 ![6][7]
 ![7][8]
 ## 地址
+
 <https://github.com/Hidove/HidoveMovies>
+
 ## 更新记录
 > 1.0 版本 2019年6月18日
 
