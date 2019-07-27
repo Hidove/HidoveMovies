@@ -1,0 +1,106 @@
+.Hidove-category ul{
+    padding: 0px;
+}
+.Hidove-category{
+    width: 200px;
+    margin-top: 10px;
+}
+.Hidove-sourceCategory{
+    padding: 0px;
+    margin-top: 10px;
+    max-height: 340px;
+    overflow-y:scroll;
+}
+.Hidove-sourceCategory ul{
+    padding: 0px;
+    width: 180px;
+    max-height: 340px;
+}
+.Hidove-category-paper{
+    margin: 20px 0px 0px 0px;
+    width: 72px;
+}
+.Hidove-Category-shield{
+    width: 200px;
+    padding: 0px;
+    margin-top: 10px;
+    max-height: 340px;
+    overflow-y:scroll;
+}
+.Hidove-Category-shield .mdui-list{
+    padding: 0px;
+}
+.Hidove-checkbox {
+    margin: 10px;
+    /* border: red solid; */
+}
+.Hidove-admin-btn{
+    margin:10px;
+}
+.Hidove-admin-login{
+    margin: 50px auto;
+    padding: 20px;
+    max-width:500px; 
+}
+.Hidove-admin-login-hearder{
+    /* margin: auto; */
+    text-align: center;
+    margin: 10px;
+}
+.Hidove-admin-login-panel{
+    margin: auto;
+    max-width: 200px;
+}
+.Hidove-admin-login-submit{
+    margin: 10px auto;
+    text-align: center;
+}
+.Hidove-admin-login-input{
+    padding-top:  0px;
+    margin:  auto;
+    max-width: 200px;
+}
+.Hidove-login-avatar{
+    -webkit-transition: 0.4s;
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out; 
+}
+.Hidove-login-avatar:hover{
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+}
+.Hidove-login-avatar{
+    animation-timing-function:cubic-bezier(0,0,.07,1)!important;
+}
+.Hidove-login-avatar:hover{
+    transform:rotate(360deg) scale(1.2);
+    border-width:5px;
+    animation:avatar .5s
+}
+
+/*panel阴影*/
+/* .Hidove-admin-login{
+    box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+     -moz-box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+ }
+ 
+ .Hidove-admin-login:hover{
+     box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+     -moz-box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+ } */
+/*  
+ .panel-small{
+     box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+     -moz-box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+ }
+ 
+ .panel-small:hover{
+     box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+     -moz-box-shadow: 1px 1px 5px 5px rgba(255, 112, 173, 0.35);
+ }
+
+ .app.container {
+     box-shadow: 0 0 30px rgba(255, 112, 173, 0.35);
+ } */
