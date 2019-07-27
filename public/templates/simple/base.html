@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{block name="title"}标题{/block}</title>
+  <meta name="keywords" content="{$Hidove.keywords}" />
+  <meta name="description" content="{$Hidove.description}" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <link rel="icon" href="{$Hidove.favicon}">
+  <link href="{$Hidove.template}/css/backTop.css" rel="stylesheet" type="text/css" />
+{include file="./templates/simple/head.html" /}
+{block name="main"}主内容{/block}
+<a href="#0" class="cd-top">Top</a>
+<script type="text/javascript" src="{$Hidove.template}/js/base.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{$Hidove['foot-code']|stripslashes|html_entity_decode}
+<nav class="">
+    <div class="container" style="text-align: center;">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <p>{$Hidove.title}－ {$Hidove.subtitle} </p>
+                <p>
+                  本站所有内容均来自互联网，如果本站部分内容侵犯您的版权请告知，在必要证明文件下我们第一时间撤除
+                  </p>
+                  <p>Copyright ©2019 All Rights Reserved {$Think.server.SERVER_NAME}</p></div>
+          </div>
+    </div>
+  </nav>
+</body>
+</html>

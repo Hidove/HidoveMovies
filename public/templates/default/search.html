@@ -1,6 +1,6 @@
 {extend name="./templates/default/base.html" /}
 {block name="title"}
-{if $Hi.keyword}{$Hi.keyword} 的搜索结果
+{if $info.keyword}{$info.keyword} 的搜索结果
 {else /}搜索
 {/if}
 - {$Hidove.subtitle}{/block}
@@ -12,39 +12,53 @@
         <input id="search-input" class="mdui-textfield-input mdui-float-left Hidove-search-input" type="text"/>
         <button id="search-btn" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent Hidove-search-btn">搜索</button>
 </div>
-    
-        {if $video}
-            {if count($video) == count($video, 1)}
-                <div class="mdui-typo">
-                    <p>总共<code>1</code>条数据</p>
-                </div>
-                <a class="" href="{:url('index/index/info',['id' => $video.id])}">
-                    <div class="mdui-chip">
-                        <span class="mdui-chip-icon">0</span>
-                        <span class="mdui-chip-title">{$video.name}</span>
-                    </div>
-                </a>
-            {else}
-                <div class="mdui-typo">
-                    <p>总共<code>{$video|count}</code>条数据</p>
-                </div>
-                {foreach $video as $key =>$value}
-                    <a class="" href="{:url('index/index/info',['id' => $value.id])}">
-                        <div class="mdui-chip">
-                            <span class="mdui-chip-icon">{$key}</span>
-                            <span class="mdui-chip-title">{$value.name}</span>
-                        </div>
-                    </a>
-                {/foreach}
-            {/if}
-                
-         {else /}
-         <div class="mdui-typo">
-            <p>总共<code>{$video|count}</code>条数据</p>
-            <p>无结果</p>
-        </div>
-        {/if}
+<div class="mdui-typo" id="list-info">
 </div>
+<div id="search-list">
+        <div id="videoListLoading" >
+                <div class="loader">
+                    <div class='loader_overlay'></div>
+                    <div class='loader_cogs'>
+                      <div class='loader_cogs__top'>
+                        <div class='top_part'></div>
+                        <div class='top_part'></div>
+                        <div class='top_part'></div>
+                        <div class='top_hole'></div>
+                      </div>
+                      <div class='loader_cogs__left'>
+                        <div class='left_part'></div>
+                        <div class='left_part'></div>
+                        <div class='left_part'></div>
+                        <div class='left_hole'></div>
+                      </div>
+                      <div class='loader_cogs__bottom'>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_part'></div>
+                        <div class='bottom_hole'></div>
+                      </div>
+                      <p>loading</p>
+                    </div>
+                 </div>
+             </div>
+</div>
+</div>
+ <!-- 底部导航 -->
+ <div class="mdui-bottom-nav mdui-color-theme">
+        <a href="{:url('index/index/search',['wd'=>$info.keyword,'page'=>($info.page-1)])}" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5c4;</i>
+          <label>Preview</label>
+        </a>
+        <a href="" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5d5;</i>
+          <label>Refresh</label>
+        </a>
+        <a href="{:url('index/index/search',['wd'=>$info.keyword,'page'=>($info.page+1)])}" class="mdui-ripple">
+          <i class="mdui-icon material-icons">&#xe5c8;</i>
+          <label>Next</label>
+        </a>
+      </div>
+      <!--  -->
 <script>
 $('#search-btn').click(function(){
     var keyword =  $("#search-input").val();
@@ -55,5 +69,75 @@ $('#search-input').keypress(function(e){
     	$('#search-btn').click();
     }
 	});
+</script>
+<script>
+  $.ajax({
+  type:'get',
+    url:"{:url('api/table/search')}",
+    dataType:'json',
+    data:{
+        'wd':'{$info.keyword}',
+        'page':'{$info.page}'},
+      success:function(data){
+        var html;
+        // console.log(data);
+        var info = data['data']['info']
+        var video = data['data']['video']
+        console.log(video);
+        if(info['pagecount'] == ''){
+          html =  
+                `<div class="mdui-typo">
+                    <p>总共<code>`
+                    +info['pagecount']
+                    +`</code>条数据</p>
+                    <p>无结果</p>
+                </div>`;
+                
+        }else{
+          html = 
+                `<div class="mdui-typo">
+                    <p><strong>总共</strong><code>`
+                        +info.recordcount
+                        +`</code><strong>条数据 </strong>
+                        <span><strong>共</strong><code>`
+                        +info.pagesize
+                        +`</code><strong>页  </strong></span><span><strong>当前第</strong><code>`
+                        +info.page
+                        +`</code><strong>页  </strong></span>
+                        <span><strong>共</strong><code>`
+                        +video.length
+                        +`</code><strong>条数据</strong></span>
+                    </p>
+                </div>`;
+        }
+        $('#list-info').html(html);        
+        html = '';
+        // 
+        for (index in video){
+          var table;
+        // 
+        table = 
+            `<a class="" href="/info/'`
+            +video[index]['id']
+            +`">
+            <div class="mdui-chip">
+            <span class="mdui-chip-icon">`
+            + index
+            +`</span>
+            <span class="mdui-chip-title">`
+            + video[index]['name']
+            +`</span>
+            </div>
+            </a>`;
+        html = html+ table;
+        }
+        $('#videoListLoading').remove();
+        $('#search-list').html(html);
+      },
+      error:function(data){
+        console.log(data);
+          $('#videoListLoading').html('<p>加载失败</p>');
+      }
+});
 </script>
 {/block}

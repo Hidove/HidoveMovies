@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="{$Hidove.template}/css/loading/css/style.css" media="screen" type="text/css" />
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  
+	<link rel="stylesheet" href="{$Hidove.template}/css/style.css">
+</head>
+<body>
+<!-- 抽屉 -->
+<div class="mdui-drawer" id="left-drawer">
+    {include file="./templates/simple/nav.html"/}
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#searchBtn').click(function(){
+		var keyword =document.getElementById('search-word').value;
+		window.open("{:url('index/index/search','','')}/wd/"+ keyword);
+
+	});
+	$('#search-word').keypress(function(e){
+    if(e.which == 13){
+      $('#searchBtn').click();
+    }
+	});
+	$('#reload').click(function(){
+    window.location.reload();
+	});
+});
+</script>

@@ -14,6 +14,16 @@
                 <label class="mdui-textfield-label">网站副标题</label>
                 <input name="subtitle" class="mdui-textfield-input Hidove-set-input" type="text" value="{$Hidove.subtitle}"/>
             </div>
+                <label class="mdui-textfield-label">模板</label>
+                <select name="template" class="mdui-select Hidove-set-input" mdui-select>
+                    {foreach $templates as $key =>$value}
+                    {if $Hidove.template == $value}
+                    <option selected="selected" value="{$value}">{$value}</option>
+                        {else}
+                    <option value="{$value}">{$value}</option>
+                        {/if}
+                    {/foreach}
+                </select>
             <div class="mdui-textfield mdui-textfield-floating-label">
                 <label class="mdui-textfield-label">关键字</label>
                 <input name="keywords"  class="mdui-textfield-input Hidove-set-input" type="text" value="{$Hidove.keywords}"/>

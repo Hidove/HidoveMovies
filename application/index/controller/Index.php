@@ -9,25 +9,27 @@ class Index extends Controller
 {
     public function index($page=1)
     {
-        $result = Hidove::index($page);
-        $template =  $result['Hidove']['template'];
-        $result['Hidove']['template']= '/templates/'.$result['Hidove']['template'].'/';
+        $Hidove = Hidove::index();
+        $info['page'] =$page;
+        $template =  $Hidove['template'];
+        $Hidove['template']= '/templates/'.$Hidove['template'].'/';
         $this->assign([
-            'video'    => $result['video'],
-            'Hidove'    => $result['Hidove'],
-            'Hi'   =>$result['Hi'],
+            'Hidove'    => $Hidove,
+            'info'   =>$info,
         ]);
         return $this->fetch('templates/'.$template.'/index.html');
     }
-    public function search($wd='')
+    public function search($wd='',$page=1)
     {
-        $result = Hidove::search($wd);
-        $template =  $result['Hidove']['template'];
-        $result['Hidove']['template']= '/templates/'.$result['Hidove']['template'].'/';
+        $info['page'] =$page;
+        $info['keyword'] =$wd;
+        $Hidove = Hidove::search($wd,$page);
+        $template =  $Hidove['template'];
+        $Hidove['template']= '/templates/'.$Hidove['template'].'/';
         $this->assign([
-            'video'    => $result['video'],
-            'Hidove'    => $result['Hidove'],
-            'Hi'   =>$result['Hi'],
+//            'video'    => $result['video'],
+            'Hidove'    => $Hidove,
+            'info'   =>$info,
         ]);
         return $this->fetch('templates/'.$template.'/search.html');
     }
@@ -37,7 +39,7 @@ class Index extends Controller
             foreach ($result['Hidove']['category'] as $key =>$value){
                 if($value['id']==$result['video']['tid']){
                     if ($value['shield']=='true'){
-                        $this->error('该资源已被屏蔽');
+                        $this->error('该资源已被屏蔽',url('index/index/index'));
                     }else{
                         break;
                     }
@@ -53,14 +55,20 @@ class Index extends Controller
     }
     public function sort($id=1,$page=1)
     {
-        $result = Hidove::sort($id,$page);
-        $template =  $result['Hidove']['template'];
-        $result['Hidove']['template']= '/templates/'.$result['Hidove']['template'].'/';
+        $Hidove = Hidove::sort($id,$page);
+        $info['page'] =$page;
+        foreach ($Hidove['category'] as $key =>$value){
+            if ($value['id']==$id){
+                $info['sort'] =$value;
+            }
+        }
+
+        $template =  $Hidove['template'];
+        $Hidove['template']= '/templates/'.$Hidove['template'].'/';
         $this->assign([
-            'video'    => $result['video'],
-            'template' => '/templates/'.$result['Hidove']['template'].'/',
-            'Hidove'    => $result['Hidove'],
-            'Hi'=> $result['Hi'],
+            'template' => '/templates/'.$Hidove['template'].'/',
+            'Hidove'    => $Hidove,
+            'info'   =>$info,
         ]);
         return $this->fetch('templates/'.$template.'/sort.html');
     }

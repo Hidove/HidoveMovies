@@ -1,0 +1,133 @@
+{extend name="./templates/simple/base.html" /}
+{block name="title"}
+{if $info.keyword}{$info.keyword} 的搜索结果
+{else /}搜索
+{/if}
+- {$Hidove.subtitle}{/block}
+{block name="main"}
+
+<div class="container" style="margin-top:20px;">
+    <div id="list-info">
+      </div>
+  <!--  -->
+      <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading">最近更新</div>
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>影视名称</th>
+                    <th>影视类型</th>
+                    <th>更新时间</th>
+                  </tr>
+                </thead>
+                <tbody id="search-list">
+                  <!--  -->
+                </tbody>
+              </table>
+              <div id="videoListLoading">
+                  <svg viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="circle" class="g-circles g-circles--v2">
+                        <circle id="12" transform="translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) " cx="35" cy="16.6987298" r="10"></circle>
+                        <circle id="11" transform="translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) " cx="16.6987298" cy="35" r="10"></circle>
+                        <circle id="10" transform="translate(10, 60) rotate(-90) translate(-10, -60) " cx="10" cy="60" r="10"></circle>
+                        <circle id="9" transform="translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) " cx="16.6987298" cy="85" r="10"></circle>
+                        <circle id="8" transform="translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) " cx="35" cy="103.30127" r="10"></circle>
+                        <circle id="7" cx="60" cy="110" r="10"></circle>
+                        <circle id="6" transform="translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) " cx="85" cy="103.30127" r="10"></circle>
+                        <circle id="5" transform="translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) " cx="103.30127" cy="85" r="10"></circle>
+                        <circle id="4" transform="translate(110, 60) rotate(-90) translate(-110, -60) " cx="110" cy="60" r="10"></circle>
+                        <circle id="3" transform="translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) " cx="103.30127" cy="35" r="10"></circle>
+                        <circle id="2" transform="translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) " cx="85" cy="16.6987298" r="10"></circle>
+                        <circle id="1" cx="60" cy="10" r="10"></circle>
+                    </g>
+                </svg>
+              </div>
+          </div>
+    <!-- 底部导航 -->
+    <nav aria-label="...">
+        <ul class="pager">
+          <li><a href="{:url('index/index/search',['wd'=>$info.keyword,'page'=>($info.page-1)])}">Previous</a></li>
+          <li><a href="">Refresh</a></li>
+          <li><a href="{:url('index/index/search',['wd'=>$info.keyword,'page'=>($info.page+1)])}">Next</a></li>
+        </ul>
+      </nav>
+    <!--  -->
+</div>
+<script>
+  $('#search-word').val('{$info.keyword}');
+      $.ajax({
+      type:'get',
+        url:"{:url('api/table/search')}",
+        dataType:'json',
+        data:{
+            'wd':'{$info.keyword}',
+            'page':'{$info.page}'},
+          success:function(data){
+            var html;
+            // console.log(data);
+            var info = data['data']['info']
+            var video = data['data']['video']
+            console.log(video);
+            if(info['pagecount'] == ''){
+              html =  
+                    `<p>总共<code id="video-count">`
+                    + info['pagecount']
+                    +`</code>条数据</p>`;
+            $('#list-info').html(html);
+            }else{
+              html =  
+                    `<p>
+                    <strong>当前第</strong><code>`
+                    +info.page
+                    +`</code><strong>页</strong>
+                    &nbsp;&nbsp;
+                    <strong>总共：</strong><code>`
+                    +info['pagecount']
+                    +`</code><strong>页</strong>
+                    &nbsp;&nbsp;
+                    <strong>共：</strong><code>`
+                    +info['recordcount']
+                    +`</code><strong>条数据</strong>
+                    &nbsp;&nbsp;
+                    <strong>数据类型：</strong><code>`
+                    +info['dataType']
+                    +`</code></p>`;
+            $('#list-info').html(html);
+              html = '';
+                for (index in video){
+                            var table;
+                          // 
+                          table = 
+                                `<tr>
+                                <th scope="row">`
+                                + index
+                                +`</th>
+                                <td><a href="/info/`
+                                +video[index]['id']
+                                +`" target="_blank">`
+                                + video[index]['name']
+                                +`</a></td>
+                                <td>`
+                                + video[index]['type']
+                                +`</td>
+                                <td>`
+                                + video[index]['last']
+                                +`</td>
+                                </tr>`;
+                          html = html+ table;
+                    };           
+            }
+            // 
+            $('#videoListLoading').remove();
+            $('#search-list').html(html);
+          },
+          error:function(data){
+            console.log(data);
+              $('#videoListLoading').html('<p>加载失败</p>');
+          }
+    });
+    </script>
+{/block}

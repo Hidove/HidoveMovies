@@ -1,0 +1,76 @@
+{extend name="./templates/simple/base.html" /}
+{block name="title"}{$video.name} - {$Hidove.subtitle}{/block}
+{block name="main"}
+<div class="container" style="margin-top:20px;">
+<!-- <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">Button</button> -->
+<div class="panel panel-info">
+          <div class="panel-heading">{$video.name} <span class="label label-info">{$video.type}</span> <span class="label label-success">{$video.last}</span></div>
+    <div class="panel-body">
+        <div class="Hidove-video-col col-sm-3">
+            <img class="Hidove-video-cover" style="width: 180px;height: 270px" src="{$video.pic}"/>
+          </div>
+          <div class="col-sm-9">
+
+        <div class="mdui-card-primary-subtitle">演员：{$video.actor}</div>
+        <div class="mdui-typo">
+          <ul class="Hidove-info-ul">
+            <li class="Hidove-info-li">
+              <strong>导演：</strong><span>{$video.director}</span>
+            </li>
+            <li class="Hidove-info-li">
+                <strong>地区：</strong><span>{$video.area}</span><br/>
+            </li>
+            <li class="Hidove-info-li"> 
+                <strong>语言：</strong><span>{$video.lang}</span>
+            </li>
+            <li class="Hidove-info-li">
+                <strong>上映：</strong><span>{$video.year}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="Hidove-info-content">{$video.des|strip_tags}</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-success">
+      <div class="panel-heading">
+        </div>
+    <div class="panel-body">
+      <iframe id="player-url" height="400px" width="100%" src="{$Hidove.playerUrl}{$video.url.0.0.1}" frameborder=0 allowfullscreen="true"></iframe>
+    </div>
+  </div>
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title">播放列表</h3>
+    </div>
+    <div class="panel-body">
+            {foreach $video.url as $i => $vo}
+            <blockquote>
+              <span class="label label-danger">「{$i+1}」号服务器</span>
+                <div class="Hidove-info-url">
+                    <ul class="mdui-clearfix">
+                    {foreach $vo as $key => $value}
+                          <button type="button" class="btn btn-default Hidove-info-url-list" id="play-{$key}" value="{$value.1}')" onclick="play('{$value.0}','{$value.1}');">{$value.0}</button>
+                    {/foreach} 
+                    </ul>
+                </div>
+            </blockquote>
+          {/foreach}
+    </div>
+  </div>
+ </div>
+ <!-- 播放器 -->
+ <script>
+   function play(title,url){
+      $("#player-url").attr('src','{$Hidove.playerUrl}'+url);
+   }
+   // method
+      var dialog = document.getElementById('player');
+      var playerUrl = document.getElementById('player-url');
+      dialog.addEventListener('open.mdui.dialog', function () {
+});
+$('#playNow').click(function(){
+  $("#play-0").click();
+});
+ </script>
+{/block}

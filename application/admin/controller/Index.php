@@ -29,10 +29,21 @@ class index extends Controller
     return $this->fetch();
 }
     public function set($data=''){
-        $Hidove = Hidove('admin');
+        $Hidove = Hidove();
+        $dir = dirname($_SERVER['SCRIPT_FILENAME']).'/templates/';
+        $arr = scandir($dir);
+        foreach ($arr as $key =>$value){
+            if($value != '.' && $value != '..'){
+                if (is_dir($dir.'/'.$value)){
+                    $dir_arr[] = $value;
+
+                }
+            }
+        }
         $this->assign([
             'Hidove' =>$Hidove,
             'video' =>'',
+            'templates'=>$dir_arr,
         ]);
         return $this->fetch();
     }
