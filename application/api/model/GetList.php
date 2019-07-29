@@ -17,6 +17,7 @@ class GetList extends Model
             //使用缓存
             # 获取缓存
             $data = Cache::tag('index')->get($page);
+//            echo $page;
             $dataType = '服务器缓存';
             if (!$data){
                 $dataType = '中心服务器';
@@ -24,7 +25,8 @@ class GetList extends Model
                 if ($order=='true') {
                     //获取目标接口分类信息
                     $apiInfo = apiInfo('array');
-                    $page2 = $apiInfo['pagecount']-1;
+//                    $page2 = $apiInfo['pagecount']-1;
+                    $page2 = $apiInfo['pagecount'] - $page;
                     //发起请求
                     $data = collect('array','videolist','','','',$page2);
                     $data['list']['@attributes']['pagecount'] = $data['list']['@attributes']['pagecount']-1;//倒序第一页资源未满所以去除
@@ -36,6 +38,8 @@ class GetList extends Model
                     # 缓存到本地
                     Cache::tag('index')->set($page,$data,$Hidove['cache-index-time']);
                 }
+//                dump($data);die();
+
             }
         }else{
             //不使用缓存

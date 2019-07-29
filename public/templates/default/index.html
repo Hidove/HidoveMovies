@@ -53,6 +53,18 @@
       <!--  -->
 </div>
 <script>
+//判断是否是手机
+var ua = navigator.userAgent;
+var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+isMobile = isIphone || isAndroid;
+//判断
+if(isMobile){
+  //加载css
+$('<link type="text/css" rel="stylesheet" href="{$Hidove.template}css/mobile.css" />').appendTo("head"); 
+}
+  // 
   $.ajax({
   type:'get',
     url:"{:url('api/table/index')}",
@@ -93,20 +105,20 @@
         for (var index = video.length;index>0;index--){
           var table;
         // 
-        table = `<div class="Hidove-video-list mdui-float-left">
-              <a href="/info/`
-              + video[index-1]['id']
-              +`">
-                <img class="mdui-img-fluid Hidove-video-cover" src="`
-              + video[index-1]['pic']
-              +`"/>
-              <div class="Hidove-video-list-title">`
-              + video[index-1]['name']
-              +`</div>
-              </a>
-          </div>`
-        html = html+ table;
-        }
+            table = `<div class="Hidove-video-list mdui-float-left">
+                  <a href="/info/`
+                  + video[index-1]['id']
+                  +`">
+                    <img class="mdui-img-fluid Hidove-video-cover" src="`
+                  + video[index-1]['pic']
+                  +`"/>
+                  <div class="Hidove-video-list-title">`
+                  + video[index-1]['name']
+                  +`</div>
+                  </a>
+              </div>`
+            html = html+ table;
+          }
         $('#videoListLoading').remove();
         $('#videoList').html(html);
       },
@@ -115,18 +127,5 @@
           $('#videoListLoading').html('<p>加载失败</p>');
       }
 });
-//判断是否是手机
-var ua = navigator.userAgent;
-var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
-isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
-isAndroid = ua.match(/(Android)\s+([\d.]+)/),
-isMobile = isIphone || isAndroid;
-//判断
-if(isMobile){
-  $('.Hidove-container').css({"padding":"0px"});
-  $('.Hidove-video-list').css({"width":"107px"});
-  $('.Hidove-video-list-title').css({"width":"107px"});
-  $('.Hidove-video-cover').css({"width":"107px","height":"148px"});
-}
 </script>
 {/block}

@@ -71,6 +71,8 @@ $('#search-input').keypress(function(e){
 	});
 </script>
 <script>
+  $('#search-input').val('{$info.keyword}');
+
   $.ajax({
   type:'get',
     url:"{:url('api/table/search')}",
@@ -83,7 +85,6 @@ $('#search-input').keypress(function(e){
         // console.log(data);
         var info = data['data']['info']
         var video = data['data']['video']
-        console.log(video);
         if(info['pagecount'] == ''){
           html =  
                 `<div class="mdui-typo">
@@ -100,7 +101,7 @@ $('#search-input').keypress(function(e){
                         +info.recordcount
                         +`</code><strong>条数据 </strong>
                         <span><strong>共</strong><code>`
-                        +info.pagesize
+                        +info.pagecount
                         +`</code><strong>页  </strong></span><span><strong>当前第</strong><code>`
                         +info.page
                         +`</code><strong>页  </strong></span>
@@ -117,7 +118,7 @@ $('#search-input').keypress(function(e){
           var table;
         // 
         table = 
-            `<a class="" href="/info/'`
+            `<a class="" href="/info/`
             +video[index]['id']
             +`">
             <div class="mdui-chip">

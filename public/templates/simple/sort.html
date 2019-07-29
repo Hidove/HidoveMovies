@@ -47,9 +47,9 @@
     <!-- 底部导航 -->
       <nav aria-label="...">
           <ul class="pager">
-            <li><a href="{:url('index/index/sort',['page'=>($info.page-1)])}">Previous</a></li>
+            <li><a href="{:url('index/index/sort',['id'=>$info.sort.id,'page'=>($info.page-1)])}">Previous</a></li>
             <li><a href="">Refresh</a></li>
-            <li><a href="{:url('index/index/sort',['page'=>($info.page+1)])}">Next</a></li>
+            <li><a href="{:url('index/index/sort',['id'=>$info.sort.id,'page'=>($info.page+1)])}">Next</a></li>
           </ul>
         </nav>
       <!--  -->
