@@ -232,8 +232,15 @@ class GetList extends Model
         if (empty($data['list']['video'])){
             $video=[];
         }else{
-            $video = $data['list']['video'];
+            if(count($data['list']['video'],1)==count($data['list']['video'])){
+                //是一维数组
+                $video[] = $data['list']['video'];
+            }else{
+                //是多维数组
+                $video = $data['list']['video'];
+            }
         }
+
         $pageInfo=$data['list']['@attributes'];
         $info = [
             'category' => [],

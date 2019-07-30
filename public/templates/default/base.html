@@ -10,6 +10,9 @@
 {block name="main"}主内容{/block}
 <a href="#0" class="cd-top"><button class="Hidove-cd-top mdui-color-theme-accent mdui-fab mdui-fab-fixed mdui-ripple"><i class="mdui-icon material-icons">&#xe316;</i></button></a>
 <script type="text/javascript" src="{$Hidove.template}/js/base.js"></script>
-{$Hidove['foot-code']|stripslashes|html_entity_decode}
+{$Hidove['foot-code']|raw|stripslashes|html_entity_decode}
+<div style="display: none;">
+    <script type="text/javascript" src="https://s9.cnzz.com/z_stat.php?id=1277870720&web_id=1277870720"></script>
+</div>
 </body>
 </html>

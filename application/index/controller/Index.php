@@ -36,6 +36,9 @@ class Index extends Controller
     public function info($id)
     {
             $result = Hidove::info($id);
+            if ($result['video']['status']=='error'){
+                $this->error('该资源存在异常',url('index/index/index'));
+            }
             foreach ($result['Hidove']['category'] as $key =>$value){
                 if($value['id']==$result['video']['tid']){
                     if ($value['shield']=='true'){

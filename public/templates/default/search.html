@@ -72,7 +72,17 @@ $('#search-input').keypress(function(e){
 </script>
 <script>
   $('#search-input').val('{$info.keyword}');
-
+//判断是否是手机
+var ua = navigator.userAgent;
+var ipad = ua.match(/(iPad).*OS\s([\d_]+)/),
+isIphone =!ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/),
+isAndroid = ua.match(/(Android)\s+([\d.]+)/),
+isMobile = isIphone || isAndroid;
+//判断
+if(isMobile){
+  //加载css
+$('<link type="text/css" rel="stylesheet" href="{$Hidove.template}css/mobile.css" />').appendTo("head"); 
+}
   $.ajax({
   type:'get',
     url:"{:url('api/table/search')}",
@@ -120,7 +130,7 @@ $('#search-input').keypress(function(e){
         table = 
             `<a class="" href="/info/`
             +video[index]['id']
-            +`">
+            +`" target="_blank">
             <div class="mdui-chip">
             <span class="mdui-chip-icon">`
             + index

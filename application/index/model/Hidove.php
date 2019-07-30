@@ -62,10 +62,16 @@ class Hidove extends Model
                 $videoToArr = $video['dl']['dd'];
             }
             //循环播放器组
-            foreach ($videoToArr as $key =>$value){
-                $videoTmp = explode('#', $value);
-                foreach ($videoTmp as $i=> $vo) {
-                    $video['url'][$key][$i] = explode('$', $vo);
+            if(count($videoToArr)!=count($videoToArr,1)){
+                //为多维数组，即播放组为空
+                $video['status'] = "error";
+            }else{
+                $video['status'] = "success";
+                foreach ($videoToArr as $key =>$value){
+                    $videoTmp = explode('#', $value);
+                    foreach ($videoTmp as $i=> $vo) {
+                        $video['url'][$key][$i] = explode('$', $vo);
+                    }
                 }
             }
         }
