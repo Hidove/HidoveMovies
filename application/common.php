@@ -31,6 +31,9 @@ function HidoveCurlGet($url){
 	// 抓取 URL 并把它传递给浏览器
 	$res = curl_exec($curl);
 	// 关闭 cURL 资源，并且释放系统资源
+	if ($res===false) {
+		echo "CURL Error".curl_error($curl);
+	}
 	curl_close($curl);
 	return $res;
 
@@ -69,7 +72,6 @@ function apiInfo($type='json',$url='apiInfo'){
     }else{
         $api = $url;
     }
-//    dump($api);
 	$data = HidoveCurlGet($api);
 	preg_match('~pagecount="(\d+)"~', $data,$pagecount);
 	preg_match('~recordcount="(\d+)"~', $data,$recordcount);
@@ -92,8 +94,10 @@ function apiInfo($type='json',$url='apiInfo'){
 function Hidove($type='index'){
     if ($type=='admin'){
         $Hidove =  Config::get('Hidove.');
-
         $Hidove['template']='/static/';
+        return $Hidove;
+    }elseif ($type == 'update') {
+        $Hidove =  Config::get('Hidove.');
         return $Hidove;
     }else{
         $Hidove = Config::get('Hidove.');

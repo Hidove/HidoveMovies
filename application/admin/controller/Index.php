@@ -29,7 +29,7 @@ class index extends Controller
     return $this->fetch();
 }
     public function set($data=''){
-        $Hidove = Hidove();
+        $Hidove = Hidove('update');
         $dir = dirname($_SERVER['SCRIPT_FILENAME']).'/templates/';
         $arr = scandir($dir);
         foreach ($arr as $key =>$value){
@@ -52,7 +52,7 @@ class index extends Controller
                 //获取数据
                 $data = Request::param();
                 //获取源配置
-                $Hidove = Hidove();
+                $Hidove = Hidove('update');
                 if (empty($data['password'])){
                     unset($data['password']);
                 }
